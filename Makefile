@@ -1,5 +1,10 @@
+TARGET=starama
+CFLAGS=-Wall -Wextra -Wpedantic
+LDFLAGS=-L./ -lSDL3
+CPPFLAGS=-I./include/
+
 all: main.o
-	cc -o starama -L./ -lSDL3 ./obj/main.o
+	$(CC) -o $(TARGET) $(LDFLAGS) ./obj/$?
 
 main.o: ./src/main.c
-	cc -o ./obj/main.o -I./include/ -c ./src/main.c
+	$(CC) -o ./obj/$@ -c $(CFLAGS) $(CPPFLAGS) $<
