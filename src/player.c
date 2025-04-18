@@ -11,11 +11,12 @@ void shoot(void) {
     state.projectileActive = true;
 
     Vec2 player_position = state.player.position;
+    float angleRad = (state.player.aimAngle+90)*M_PI/180.0f;
 
     state.projectile = (Projectile){
         .height = 25,
         .width = 25,
-        .velocity = (Vec2){0, -1},
+        .velocity = (Vec2){-cosf(angleRad), -sinf(angleRad)},
         .position = player_position,
     };
 }
