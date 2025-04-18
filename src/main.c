@@ -42,6 +42,7 @@ bool loadState(void) {
 }
 
 #include "player.c"
+#include "projectile.c"
 #include "input.c"
 #include "render.c"
 
@@ -89,11 +90,7 @@ int main(void) {
                     break;
             }
         }
-
-        if (state.projectileActive) {
-            state.projectile.position.x += state.projectile.velocity.x;
-            state.projectile.position.y += state.projectile.velocity.y;
-        }
+        updateProjectile();
 
         render(renderer);
 

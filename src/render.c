@@ -63,15 +63,7 @@ void render(SDL_Renderer *renderer) {
         state.player.aimAngle
     );
 
-    if (state.projectileActive) {
-        SDL_FRect rect = {
-            state.projectile.position.x,
-            state.projectile.position.y,
-            state.projectile.width,
-            state.projectile.height,
-        };
-        SDL_RenderFillRect(renderer, &rect);
-    }
+    renderProjectile(renderer);
 
     SDL_RenderPresent(renderer);
 }
