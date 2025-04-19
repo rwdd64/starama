@@ -109,7 +109,6 @@ int main(void) {
     SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
     while (running) {
-
         SDL_Event ev;
 
         if (SDL_PollEvent(&ev)) {
