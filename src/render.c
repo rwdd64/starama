@@ -63,7 +63,23 @@ void render(SDL_Renderer *renderer) {
         state.player.aimAngle
     );
 
-    renderProjectile(renderer);
+    objectHeadRewind();
+
+    while (state.objectHead != NULL) {
+        switch (state.objectHead->object->type) {
+            case PLAYER:
+                break;
+            case PROJECTILE:
+                renderProjectile(renderer, state.objectHead);
+                break;
+        }
+
+        if (state.objectHead->next != NULL) {
+            state.objectHead = state.objectHead->next;
+        } else {
+            break;
+        }
+    }
 
     SDL_RenderPresent(renderer);
 }

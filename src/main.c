@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <math.h>
 #include <SDL.h>
 
@@ -11,6 +12,7 @@
 
 typedef struct {
     Player player;
+    ObjectNode *objectHead;
     Projectile projectile;
     bool projectileActive;
 } GameState;
@@ -41,6 +43,41 @@ bool loadState(void) {
     return true;
 }
 
+void deleteNode(ObjectNode **node) {
+    ObjectNode *replacement = NULL;
+
+    if ((*node)->prev != NULL && (*node)->next != NULL) {
+        (*node)->prev->next = (*node)->next;
+        (*node)->next->prev = (*node)->prev;
+        replacement = (*node)->next;
+    } else if ((*node)->prev != NULL) {
+        (*node)->prev->next = NULL;
+        replacement = (*node)->prev;
+    } else if ((*node)->next != NULL) {
+        (*node)->next->prev = NULL;
+        replacement = (*node)->next;
+    }
+
+    free((*node));
+    (*node) = replacement;
+}
+
+void objectHeadRewind() {
+    if (state.objectHead == NULL) return;
+
+    while (state.objectHead->prev != NULL) {
+        state.objectHead = state.objectHead->prev;
+    }
+}
+
+void objectHeadForward() {
+    if (state.objectHead == NULL) return;
+
+    while (state.objectHead->next != NULL) {
+        state.objectHead = state.objectHead->next;
+    }
+}
+
 #include "player.c"
 #include "projectile.c"
 #include "input.c"
@@ -54,6 +91,8 @@ int main(void) {
     };
     state.player.width = 60;
     state.player.height = 75;
+
+    state.objectHead = NULL;
 
     running = true;
 
@@ -90,10 +129,26 @@ int main(void) {
                     break;
             }
         }
-        updateProjectile();
+
+        objectHeadRewind();
+
+        while (state.objectHead != NULL) {
+            switch (state.objectHead->object->type) {
+                case PLAYER:
+                    break;
+                case PROJECTILE:
+                    updateProjectile(&state.objectHead);
+                    break;
+            }
+
+            if (state.objectHead != NULL && state.objectHead->next != NULL) {
+                state.objectHead = state.objectHead->next;
+            } else {
+                break;
+            }
+        }
 
         render(renderer);
-
 
         SDL_Log("Player angle: %f", state.player.aimAngle);
     }

@@ -1,27 +1,27 @@
-void updateProjectile() {
-    if (state.projectileActive) {
-        state.projectile.position.x += state.projectile.velocity.x*0.5;
-        state.projectile.position.y += state.projectile.velocity.y*0.5;
-        if (state.projectile.position.x >= WIDTH ||
-            state.projectile.position.x < 0 ||
-            state.projectile.position.y >= HEIGHT ||
-            state.projectile.position.y < 0
-            ) {
-            state.projectile = (Projectile){0};
-            state.projectileActive = false;
-        }
+void updateProjectile(ObjectNode **node) {
+    Projectile *proj = &(*node)->object->projectile;
 
+    proj->position.x += proj->velocity.x*0.5;
+    proj->position.y += proj->velocity.y*0.5;
+
+    if (proj->position.x >= WIDTH ||
+        proj->position.x < 0 ||
+        proj->position.y >= HEIGHT ||
+        proj->position.y < 0
+        ) {
+        deleteNode(node);
     }
 }
 
-void renderProjectile(SDL_Renderer *renderer) {
-    if (state.projectileActive) {
-        SDL_FRect rect = {
-            state.projectile.position.x-state.projectile.width/2,
-            state.projectile.position.y-state.projectile.height/2,
-            state.projectile.width,
-            state.projectile.height,
-        };
-        SDL_RenderFillRect(renderer, &rect);
-    }
+void renderProjectile(SDL_Renderer *renderer, ObjectNode *node) {
+    Projectile *proj = &node->object->projectile;
+
+    SDL_FRect rect = {
+        proj->position.x-proj->width/2,
+        proj->position.y-proj->height/2,
+        proj->width,
+        proj->height,
+    };
+
+    SDL_RenderFillRect(renderer, &rect);
 }
