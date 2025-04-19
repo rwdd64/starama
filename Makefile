@@ -1,5 +1,5 @@
 TARGET=starama
-CFLAGS=-Wall -Wextra -Wpedantic
+CFLAGS=-ggdb -Wall -Wextra -Wpedantic
 LDFLAGS=-L./ -lSDL3
 CPPFLAGS=-I./include/
 
