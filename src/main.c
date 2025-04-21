@@ -15,8 +15,6 @@
 typedef struct {
     Player player;
     ObjectNode *objectHead;
-    Projectile projectile;
-    bool projectileActive;
 } GameState;
 
 static GameState state;
