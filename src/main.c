@@ -9,8 +9,8 @@
 #include "dtypes.h"
 #include "objects.h"
 
-int WIDTH = 800;
-int HEIGHT = 600;
+static int WIDTH = 800;
+static int HEIGHT = 600;
 
 typedef struct {
     Player player;
@@ -30,7 +30,7 @@ static bool running;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
-SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
+SDL_AppResult SDL_AppInit(void **_appstate, int _argc, char **_argv) {
     state = (GameState){0};
     state.player.position = (Vec2){
         state.player.width/2+WIDTH/2,
@@ -68,7 +68,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppIterate(void *appstate) {
+SDL_AppResult SDL_AppIterate(void *_appstate) {
     objectHeadRewind();
 
     while (state.objectHead != NULL) {
@@ -96,7 +96,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *ev) {
+SDL_AppResult SDL_AppEvent(void *_appstate, SDL_Event *ev) {
     switch (ev->type) {
         case SDL_EVENT_QUIT:
             running = false;
@@ -123,7 +123,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *ev) {
     return SDL_APP_CONTINUE;
 }
 
-void SDL_AppQuit(void *appstate, SDL_AppResult result) {
+void SDL_AppQuit(void *_appstate, SDL_AppResult _result) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
