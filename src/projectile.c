@@ -1,8 +1,8 @@
 void updateProjectile(ObjectNode **node) {
     Projectile *proj = &(*node)->object->projectile;
 
-    proj->position.x += proj->velocity.x*0.5;
-    proj->position.y += proj->velocity.y*0.5;
+    proj->position.x += proj->velocity.x*0.1;
+    proj->position.y += proj->velocity.y*0.1;
 
     if (proj->position.x >= WIDTH ||
         proj->position.x < 0 ||

@@ -60,6 +60,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
     };
     state.player.width = 60;
     state.player.height = 75;
+    state.player.aimAngle = 270;
 
     state.objectHead = NULL;
 
@@ -113,8 +114,6 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
     }
 
     render(renderer);
-
-    SDL_Log("Player angle: %f", state.player.aimAngle);
 
     return SDL_APP_CONTINUE;
 }

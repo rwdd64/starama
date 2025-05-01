@@ -8,7 +8,7 @@ void turnLeft(float angle) {
 
 void shoot(void) {
     Vec2 player_position = state.player.position;
-    float angleRad = (state.player.aimAngle+90)*M_PI/180.0f;
+    float angleRad = state.player.aimAngle*M_PI/180.0f;
 
     objectHeadForward();
 
@@ -19,7 +19,6 @@ void shoot(void) {
         nextNode = state.objectHead;
         nextNode->next = NULL;
         nextNode->prev = NULL;
-
     } else {
         state.objectHead->next = malloc(sizeof(ObjectNode));
         nextNode = state.objectHead->next;
@@ -35,7 +34,7 @@ void shoot(void) {
     nextObject->projectile.height = 25;
     nextObject->projectile.width = 25;
     nextObject->projectile.velocity = (Vec2){
-        -cosf(angleRad), -sinf(angleRad)
+        cosf(angleRad), sinf(angleRad)
     };
     nextObject->projectile.position = player_position;
 }

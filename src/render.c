@@ -27,15 +27,17 @@ void renderTriangle(SDL_Renderer *renderer, SDL_Point origin, float w, float h, 
         (a.y+b.y+c.y)/3
     };
 
-    rotatePoint(center, &a, angle);
+    const float triangleStartAngle = 90;
+
+    rotatePoint(center, &a, angle+triangleStartAngle);
     a.x += origin.x;
     a.y += origin.y;
 
-    rotatePoint(center, &b, angle);
+    rotatePoint(center, &b, angle+triangleStartAngle);
     b.x += origin.x;
     b.y += origin.y;
 
-    rotatePoint(center, &c, angle);
+    rotatePoint(center, &c, angle+triangleStartAngle);
     c.x += origin.x;
     c.y += origin.y;
 
