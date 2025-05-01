@@ -9,8 +9,8 @@
 #include "dtypes.h"
 #include "objects.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+int WIDTH = 800;
+int HEIGHT = 600;
 
 typedef struct {
     Player player;
@@ -110,6 +110,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *ev) {
         case SDL_EVENT_MOUSE_WHEEL:
             state.player.width += ev->wheel.y * 20;
             state.player.height += ev->wheel.y * 20;
+            break;
+        case SDL_EVENT_WINDOW_RESIZED:
+            SDL_GetWindowSize(window, &WIDTH, &HEIGHT);
             break;
     }
 
